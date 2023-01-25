@@ -28,23 +28,36 @@ public class CombatListener implements Listener {
         Player defender = (Player) entity;
         Player attacker = getAttacker(event);
         addToCombat(defender, attacker);
+        addLastHitPlayer(defender,attacker);
 
     }
 
     private void addToCombat(Player defender, Player attacker) {
-        if(!defender.hasPermission("vagt.slag")) {
+        if(combatList.isPlayerInCombat(defender)) {
+            combatList.setTime(defender,settings.getTime());
+        } else if (!defender.hasPermission("vagt.slag")) {
             combatList.addPlayerToCombat(defender,settings.getTime());
         }
-        if(!attacker.hasPermission("vagt.slag")) {
+        if(combatList.isPlayerInCombat(attacker)) {
+            combatList.setTime(attacker,settings.getTime());
+        } else if(!attacker.hasPermission("vagt.slag")) {
             combatList.addPlayerToCombat(attacker,settings.getTime());
         }
+
+    }
+    private void addLastHitPlayer(Player defender,Player attacker) {
+        if(!(combatList.getLastHit(defender) == attacker)) {
+            combatList.removeLastHit(defender);
+            combatList.addLastHit(defender,attacker);
+        }
+
     }
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         combatList.removePlayer(player);
-
+        combatList.removeLastHit(player);
     }
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
@@ -54,6 +67,7 @@ public class CombatListener implements Listener {
         }
         player.setHealth(0);
         combatList.removePlayer(player);
+        combatList.removeLastHit(player);
     }
 
 
