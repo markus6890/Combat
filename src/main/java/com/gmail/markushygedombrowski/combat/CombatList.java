@@ -14,7 +14,7 @@ public class CombatList {
     private JavaPlugin plugin;
     private HotBarMessage hotBarMessage;
 
-    public CombatList(CombatMain plugin, HotBarMessage hotBarMessage) {
+    public CombatList(JavaPlugin plugin, HotBarMessage hotBarMessage) {
         this.plugin = plugin;
         this.hotBarMessage = hotBarMessage;
     }
