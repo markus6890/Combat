@@ -69,6 +69,7 @@ public class CombatList {
 
             if (!(entry.getValue() <= 0)) {
                 Player player = entry.getKey();
+
                 int timeInSeconds = (entry.getValue() / 20) + 1;
                 hotBarMessage.actionBarMessage(player, timeInSeconds);
                 entry.setValue(entry.getValue() - 1);
