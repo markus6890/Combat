@@ -27,6 +27,9 @@ public class CombatListener implements Listener {
         if (!(entity instanceof Player)) return;
         Player defender = (Player) entity;
         Player attacker = getAttacker(event);
+        if(attacker == null) {
+            return;
+        }
         addToCombat(defender, attacker);
         addLastHitPlayer(defender,attacker);
 
@@ -38,6 +41,7 @@ public class CombatListener implements Listener {
         } else if (!defender.hasPermission("vagt.slag")) {
             combatList.addPlayerToCombat(defender,settings.getTime());
         }
+
         if(combatList.isPlayerInCombat(attacker)) {
             combatList.setTime(attacker,settings.getTime());
         } else if(!attacker.hasPermission("vagt.slag")) {
