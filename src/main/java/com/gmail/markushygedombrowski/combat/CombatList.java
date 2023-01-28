@@ -66,11 +66,7 @@ public class CombatList {
             if (p == null) {
                 return;
             }
-            if(p.isDead()) {
-                combatMap.remove(entry.getKey());
-                lastHit.remove(entry.getKey());
-                return;
-            }
+
             if (!(entry.getValue() <= 0)) {
                 Player player = entry.getKey();
                 int timeInSeconds = (entry.getValue() / 20) + 1;
