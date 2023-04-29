@@ -11,14 +11,16 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class CombatMain extends JavaPlugin {
-
+    private CombatList combatList;
+    private static CombatMain combatMain;
     @Override
     public void onEnable()  {
+        combatMain = this;
         Settings settings = new Settings();
         FileConfiguration config = getConfig();
         settings.load(config);
         HotBarMessage hotBarMessage = new HotBarMessage();
-        CombatList combatList = new CombatList(this,hotBarMessage);
+        combatList = new CombatList(this,hotBarMessage);
         combatList.clearMap();
 
         CombatListener combatListener = new CombatListener(settings, combatList);
@@ -35,6 +37,10 @@ public class CombatMain extends JavaPlugin {
 
     @Override
     public void onDisable() {
+    combatList.clearMap();
+    }
 
+    public static CombatMain getIninstance() {
+        return combatMain;
     }
 }

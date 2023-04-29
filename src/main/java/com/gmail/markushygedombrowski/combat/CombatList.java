@@ -1,6 +1,5 @@
 package com.gmail.markushygedombrowski.combat;
 
-import com.gmail.markushygedombrowski.CombatMain;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -69,9 +68,8 @@ public class CombatList {
 
             if (!(entry.getValue() <= 0)) {
                 Player player = entry.getKey();
-
                 int timeInSeconds = (entry.getValue() / 20) + 1;
-                hotBarMessage.actionBarMessage(player, timeInSeconds);
+                hotBarMessage.combatActionBarMessage(player, timeInSeconds);
                 entry.setValue(entry.getValue() - 1);
                 return;
             }

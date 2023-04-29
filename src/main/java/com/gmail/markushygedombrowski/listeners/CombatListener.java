@@ -3,6 +3,7 @@ package com.gmail.markushygedombrowski.listeners;
 
 import com.gmail.markushygedombrowski.Settings;
 import com.gmail.markushygedombrowski.combat.CombatList;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -24,18 +25,26 @@ public class CombatListener implements Listener {
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent event) {
         Entity entity = event.getEntity();
-        if (!(entity instanceof Player)) return;
-        Player defender = (Player) entity;
-        Player attacker = getAttacker(event);
-        if(attacker == null) {
+        if(entity.hasMetadata("NPC")) {
             return;
         }
+        if(event.getDamager().hasMetadata("NPC")) {
+            return;
+        }
+         if (!(entity instanceof Player)) {
+             return;
+         }
+
+        Player defender = (Player) entity;
+        Player attacker = getAttacker(event);
         addToCombat(defender, attacker);
         addLastHitPlayer(defender,attacker);
 
     }
 
     private void addToCombat(Player defender, Player attacker) {
+
+
         if(combatList.isPlayerInCombat(defender)) {
             combatList.setTime(defender,settings.getTime());
         } else if (!defender.hasPermission("vagt.slag")) {
@@ -63,13 +72,18 @@ public class CombatListener implements Listener {
         combatList.removePlayer(player);
         combatList.removeLastHit(player);
     }
+
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if(!combatList.isPlayerInCombat(player)) {
             return;
         }
+        if(player.hasPermission("vagt.slag")) {
+            return;
+        }
         player.setHealth(0);
+        Bukkit.broadcastMessage("§c" + player.getName() + " §7logged ud i combat");
         combatList.removePlayer(player);
         combatList.removeLastHit(player);
     }
@@ -84,6 +98,7 @@ public class CombatListener implements Listener {
             p = (Player) projectile.getShooter();
             return p;
         }
+
         p = (Player) event.getDamager();
         return p;
     }

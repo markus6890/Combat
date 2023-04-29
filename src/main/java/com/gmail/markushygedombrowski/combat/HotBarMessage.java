@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 public class HotBarMessage {
 
-    public void actionBarMessage(Player player, int seconds) {
+    public void combatActionBarMessage(Player player, int seconds) {
         sendActionbar(player,"§4§lCOMBAT! §cDu er i combat!: " + seconds);
     }
 
