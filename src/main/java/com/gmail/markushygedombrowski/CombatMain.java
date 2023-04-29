@@ -43,4 +43,7 @@ public class CombatMain extends JavaPlugin {
     public static CombatMain getIninstance() {
         return combatMain;
     }
+    public CombatList getCombatList() {
+        return combatList;
+    }
 }
