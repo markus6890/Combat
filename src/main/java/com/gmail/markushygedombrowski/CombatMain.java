@@ -12,10 +12,10 @@ import java.util.concurrent.ExecutionException;
 
 public class CombatMain extends JavaPlugin {
     private CombatList combatList;
-    private static CombatMain combatMain;
+    private static CombatMain instance;
     @Override
     public void onEnable()  {
-        combatMain = this;
+        instance = this;
         Settings settings = new Settings();
         FileConfiguration config = getConfig();
         settings.load(config);
@@ -41,7 +41,7 @@ public class CombatMain extends JavaPlugin {
     }
 
     public static CombatMain getInstance() {
-        return combatMain;
+        return instance;
     }
     public CombatList getCombatList() {
         return combatList;
