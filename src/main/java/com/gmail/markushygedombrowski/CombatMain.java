@@ -40,7 +40,7 @@ public class CombatMain extends JavaPlugin {
     combatList.clearMap();
     }
 
-    public static CombatMain getIninstance() {
+    public static CombatMain getInstance() {
         return combatMain;
     }
     public CombatList getCombatList() {
