@@ -75,6 +75,7 @@ public class CombatList {
             }
             combatMap.remove(entry.getKey());
             lastHit.remove(entry.getKey());
+            p.removeMetadata("combat", plugin);
 
         });
     }

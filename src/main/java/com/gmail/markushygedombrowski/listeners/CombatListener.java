@@ -1,6 +1,7 @@
 package com.gmail.markushygedombrowski.listeners;
 
 
+import com.gmail.markushygedombrowski.CombatMain;
 import com.gmail.markushygedombrowski.Settings;
 import com.gmail.markushygedombrowski.combat.CombatList;
 import org.bukkit.Bukkit;
@@ -12,14 +13,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 public class CombatListener implements Listener {
     private Settings settings;
     private CombatList combatList;
-
-    public CombatListener(Settings settings, CombatList combatList) {
+    private CombatMain plugin;
+    public CombatListener(Settings settings, CombatList combatList, CombatMain plugin) {
         this.settings = settings;
         this.combatList = combatList;
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -49,12 +52,14 @@ public class CombatListener implements Listener {
             combatList.setTime(defender,settings.getTime());
         } else if (!defender.hasPermission("vagt.slag")) {
             combatList.addPlayerToCombat(defender,settings.getTime());
+            defender.setMetadata("combat",new FixedMetadataValue(plugin,"true"));
         }
 
         if(combatList.isPlayerInCombat(attacker)) {
             combatList.setTime(attacker,settings.getTime());
         } else if(!attacker.hasPermission("vagt.slag")) {
             combatList.addPlayerToCombat(attacker,settings.getTime());
+            attacker.setMetadata("combat",new FixedMetadataValue(plugin,"true"));
         }
 
     }

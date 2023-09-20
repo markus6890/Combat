@@ -23,7 +23,7 @@ public class CombatMain extends JavaPlugin {
         combatList = new CombatList(this,hotBarMessage);
         combatList.clearMap();
 
-        CombatListener combatListener = new CombatListener(settings, combatList);
+        CombatListener combatListener = new CombatListener(settings, combatList, this);
         Bukkit.getPluginManager().registerEvents(combatListener,this);
 
         CompletableFuture<Void> countDown = combatList.combatCoolDown();
