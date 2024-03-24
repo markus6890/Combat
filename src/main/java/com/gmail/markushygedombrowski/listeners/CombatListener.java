@@ -4,6 +4,8 @@ package com.gmail.markushygedombrowski.listeners;
 import com.gmail.markushygedombrowski.CombatMain;
 import com.gmail.markushygedombrowski.Settings;
 import com.gmail.markushygedombrowski.combat.CombatList;
+import com.gmail.markushygedombrowski.utils.Utils;
+import com.sk89q.worldguard.protection.flags.StateFlag;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -38,8 +40,17 @@ public class CombatListener implements Listener {
              return;
          }
 
+
         Player defender = (Player) entity;
         Player attacker = getAttacker(event);
+        if(Utils.regionHasFlag(defender.getLocation(),Utils.getFlag("pvp"), StateFlag.State.DENY) || defender.hasMetadata("jail") || attacker.hasMetadata("jail") || Utils.regionHasFlag(attacker.getLocation(),Utils.getFlag("pvp"), StateFlag.State.DENY)) {
+            attacker.sendMessage("§cDu kan ikke slå i denne region");
+            attacker.sendMessage(attacker.getDisplayName() + " meta: " + attacker.hasMetadata("jail"));
+            attacker.sendMessage(defender.getDisplayName() +" meta: " + defender.hasMetadata("jail"));
+
+
+            return;
+        }
         addToCombat(defender, attacker);
         addLastHitPlayer(defender,attacker);
 
